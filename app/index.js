@@ -2,7 +2,11 @@ var app         = require('express')();
 var server      = require('http').Server(app);
 var io          = require('socket.io')(server);
 
-server.listen(80);
+var port = process.port || 8080;
+
+server.listen(port, function() {
+    console.log("Server Live");
+});
 
 app.use('*', require('./routes/router'));
 
