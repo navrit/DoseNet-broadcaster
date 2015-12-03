@@ -8,6 +8,9 @@ server.listen(port, function() {
     console.log("Server Live");
 });
 
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+
 app.use('*', require('./routes/router'));
 
 io.on('connection', function (socket) {
