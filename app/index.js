@@ -1,4 +1,6 @@
-var app         = require('express')();
+var express     = require('express');
+
+var app         = express();
 var server      = require('http').Server(app);
 var io          = require('socket.io')(server);
 
@@ -11,6 +13,7 @@ server.listen(port, function() {
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+app.use(express.static(__dirname + '/static'))
 app.use('*', require('./routes/router'));
 
 io.on('connection', function (socket) {

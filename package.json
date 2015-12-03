@@ -22,5 +22,14 @@
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "socket.io": "^1.3.7"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.1.2",
+    "del": "^2.1.0",
+    "extract-text-webpack-plugin": "^0.9.1",
+    "modernizr-webpack-plugin": "^1.0.5",
+    "ng-annotate-webpack-plugin": "^0.1.2",
+    "socket.io-client": "^1.3.7",
+    "webpack": "^1.12.9"
   }
 }

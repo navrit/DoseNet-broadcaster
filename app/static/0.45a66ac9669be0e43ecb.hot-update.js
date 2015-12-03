@@ -1,0 +1,1 @@
+webpackHotUpdate(0,{51:function(t,o,n){var e=n(21),c=e.connect("http://localhost:8080");c.on("news",function(t){console.log(t),c.emit("my other event",{my:"data"})})}});
