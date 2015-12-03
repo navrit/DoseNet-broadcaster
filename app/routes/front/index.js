@@ -1,5 +1,5 @@
 var route = function(req, res, next) {
-    res.send("Hello");
+    res.render('index');
 };
 
 module.exports = route;
