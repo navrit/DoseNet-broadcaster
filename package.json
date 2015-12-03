@@ -4,6 +4,7 @@
   "description": "At intervals grab geojson and broadcasts an update event to clients (eg. mobile/web apps)",
   "main": "app.js",
   "scripts": {
+    "start": "bash bin/start.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
