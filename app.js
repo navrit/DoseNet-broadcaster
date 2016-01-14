@@ -1,13 +1,13 @@
 // Dependencies
 var fs = require('fs');
 var http = require('http');
-var async = require('async');
 var obj;
 
 // Global variables
 var update_frequency = 3000; // 3 mins [ms] = 5 * 60 * 1000
 var current_date = new Date().toLocaleString();
-var file_url = "https://radwatch.berkeley.edu/sites/default/files/output.geojson";
+var request = require('superagent');
+var geojson;
 
 // Get file to compare against
 function readJSONFromFile(){
@@ -20,35 +20,15 @@ function readJSONFromFile(){
     });
 }
 
-// Function to download file using HTTP.get
-function getFile () {
-    var file_name = "output.geojson";
-    var file = fs.createWriteStream(file_name);
-
-    var options = {
-        host: "radwatch.berkeley.edu",
-        port: 80,
-        path: "/sites/default/files/" + file_name
-    };
-
-    http.get(options, function(res) {
-        res.setEncoding('utf8');
-        res
-            .on('data', function(data) {
-                file.write(data);
-                console.log("--> WRITE");
-            })
-            .on('end', function() {
-                file.end();
-                console.log("--> GOT " + file_name);
-            })
-            .on('error', function(e) {
-                console.log("--> ERROR " + e.message);
-            });
+// Function to download a file using superagent
+function getFile(url){
+    var req = request.get(url, function(err, res){
+        if (err) throw err;
+        console.log('Response ok:', res.ok);
+        console.log('Response text:', res.text);
+        return res.text;
     });
-
-    //callback();
-};
+}
 
 function broadcast(){
     current_date = new Date().toTimeString();
@@ -60,18 +40,7 @@ function broadcast(){
 function main(){
     console.log("DoseNet Broadcast Node.js service! @ " + current_date + "\n");
     try {
-        /*async.series(
-            [
-                getFile(),
-                readJSONFromFile()
-            ],
-            function(err) {
-                //console.log(err);
-            }
-        );*/
-        //getFile(readJSONFromFile);
-        getFile();
-        //readJSONFromFile();
+        geojson = getFile("https://radwatch.berkeley.edu/sites/default/files/output.geojson");
         setInterval(broadcast, update_frequency);
     } catch(err) {
         console.log(err);
